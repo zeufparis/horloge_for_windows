@@ -1,0 +1,95 @@
+<!-- créé le 22/11/2021 par zeuf.fr-->
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <title>Horloge</title>
+    <hta:application id = "AppHorloge"
+    applicationname = "Horloge"
+    caption = "yes"
+    version = "1.0"
+    innerborder = "no"
+    navigable = "no"
+    contextmenu = "yes"
+    showintaskbar = "yes"
+    singleinstance = "yes"
+    borderstyle = "normal"
+    scroll = "no"
+    maximizebutton = "no"
+    minimizebutton = "no"    
+    >
+		
+    <style>
+      body {
+        color : #ffffff;
+        background-color: #000000;
+        font-family: sans-serif;
+        text-align: center;
+      }
+    </style>
+		
+	</head>
+	<body>
+    <div id="body"></div>
+
+
+<bgsound>
+
+
+  <script>
+    window.resizeTo(180,125); 
+    function date_fr_avec_heure() {
+      // les noms de jours / mois
+      var jours = new Array("Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi");
+      var mois = new Array("janvier", "fevrier", "mars", "avril", "mai", "juin", "juillet", "aout", "septembre", "octobre", "novembre", "decembre");
+      // on recupere la date
+      var date = new Date();
+      // on construit le message
+      var heure = "";
+      var date_complete = "";
+      
+      var date_complete = jours[date.getDay()] + " ";   // nom du jour
+      date_complete += date.getDate() + " ";   // numero du jour
+      date_complete += mois[date.getMonth()] + " ";   // mois
+      //date_complete += date.getFullYear();
+      
+      heure = date.getHours() + ":";
+      if(date.getMinutes() <= 9){
+        heure += "0" + date.getMinutes();
+      }
+      else{
+        heure += date.getMinutes();
+      }
+      message = '<span style="font-weight: bold;font-size: 2em">' + heure + '</span>';
+      message += '<br />';
+      message += '<span style="font-size: 0.8em">' + date_complete + '</span>';
+      message += '<br />';
+      message += '<small>'+date.getFullYear()+'_';      
+      if(date.getMonth()+1 < 10){
+        message += '0';
+      }
+      message += (date.getMonth()+1)+'_';
+      if(date.getDate() < 10){
+        message += '0';
+      }   
+      message += date.getDate()+'</small>';      
+      // si c'est une heure 
+      if (date.getMinutes() == '0'){
+        //document.getElementById("id_audio").innerHTML = '<bgsound src="carillon.mp3">';
+        document.getElementsByTagName("bgsound")[0].src = "carillon.mp3";
+      }
+      else{
+        document.getElementsByTagName("bgsound")[0].src = "";
+      }
+      return message;
+    }
+    
+    function affiche_date(){
+      document.getElementById("body").innerHTML = date_fr_avec_heure();    
+    }
+    affiche_date();
+    setInterval(affiche_date, 59000);
+  </script>
+	</body>
+</html>
